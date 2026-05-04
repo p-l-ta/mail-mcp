@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mail-app": {
+      "command": "/Users/paultemplinashford/.local/share/fnm/node-versions/v20.20.2/installation/bin/node",
+      "args": ["/Users/paultemplinashford/Development/mail-mcp/dist/server.js"]
+    }
+  }
+}
