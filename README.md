@@ -19,13 +19,13 @@ MCP server that gives Claude (and other MCP hosts) full access to **Mail.app** o
 ### Manual / Amazon Quick / other hosts
 
 ```bash
-npx mail-mcp
+npx @p-l-ta/mail-mcp
 ```
 
 Or install globally:
 
 ```bash
-npm install -g mail-mcp
+npm install -g @p-l-ta/mail-mcp
 mail-mcp
 ```
 
@@ -36,7 +36,7 @@ Point your MCP host at the `mail-mcp` binary (stdio transport). Example config:
   "mcpServers": {
     "mail-app": {
       "command": "npx",
-      "args": ["mail-mcp"]
+      "args": ["@p-l-ta/mail-mcp"]
     }
   }
 }

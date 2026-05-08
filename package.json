@@ -1,5 +1,5 @@
 {
-  "name": "mail-mcp",
+  "name": "@p-l-ta/mail-mcp",
   "version": "1.0.0",
   "description": "MCP server exposing Mail.app to Claude and other MCP hosts",
   "type": "module",
