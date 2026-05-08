@@ -1,12 +1,13 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.p-l-ta/mail-mcp",
+  "title": "Mail.app",
   "description": "Search, read, send, and manage email via macOS Mail.app across all configured accounts.",
   "repository": {
     "url": "https://github.com/p-l-ta/mail-mcp",
     "source": "github"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "packages": [
     {
       "registryType": "npm",
