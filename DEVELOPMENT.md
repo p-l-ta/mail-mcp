@@ -144,8 +144,12 @@ npm publish --access public        # first-time publish, no --provenance
 ```
 
 After that, configure OIDC trust on npmjs.com:
-- npmjs.com → package settings → Publishing access → "Require 2FA or automation tokens"... no, actually:
-- npmjs.com → package settings → `@p-l-ta/mail-mcp` → Publishing access → add the GitHub Actions OIDC publisher
+1. Go to npmjs.com → your profile → Access Tokens → Generate New Token → **Granular Access Token**
+2. Set the token scope to your package (`@p-l-ta/mail-mcp`) with **Read and write** access
+3. Go to the package page → Settings → Publishing access → set to **"Require 2FA or automation tokens"**
+4. In your GitHub repo → Settings → Secrets and variables → Actions → add the token as `NPM_TOKEN`
+
+Once the package exists and OIDC is configured, remove the `NPM_TOKEN` secret — it's no longer needed.
 
 ### Subsequent publishes
 
@@ -265,19 +269,19 @@ The [MCP registry](https://registry.modelcontextprotocol.io) is a community dire
   "title": "Mail.app",
   "description": "...",
   "repository": { "url": "https://github.com/p-l-ta/mail-mcp", "source": "github" },
-  "version": "1.0.3",
+  "version": "1.1.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@p-l-ta/mail-mcp",
-      "version": "1.0.2",
+      "version": "1.1.0",
       "transport": { "type": "stdio" }
     }
   ]
 }
 ```
 
-`version` (top-level) is the registry entry version. `packages[0].version` is the npm package version. The release workflow updates both automatically via `jq`.
+`version` (top-level) is the registry entry version. `packages[0].version` is the npm package version. The release workflow updates both automatically via `jq` — you do not need to edit `server.json` by hand before a release; just bump `package.json` and `manifest.json`, and the workflow syncs `server.json` at publish time.
 
 ### Publishing via mcp-publisher
 
@@ -302,7 +306,7 @@ The release workflow does this automatically after updating `server.json` with t
 After publishing, the server appears at its direct URL immediately:
 
 ```
-https://registry.modelcontextprotocol.io/v0.1/servers/io.github.p-l-ta%2Fmail-mcp/versions/1.0.3
+https://registry.modelcontextprotocol.io/v0.1/servers/io.github.p-l-ta%2Fmail-mcp/versions/1.1.0
 ```
 
 But it may take hours or days to appear in keyword search results. This is a known issue ([registry #960](https://github.com/modelcontextprotocol/registry/issues/960)).
@@ -313,42 +317,60 @@ But it may take hours or days to appear in keyword search results. This is a kno
 
 This is separate from the MCP registry — it's Anthropic's curated directory surfaced inside Claude Desktop.
 
-**Submission form:** https://clau.de/desktop-extention-submission
+**Submission form:** https://clau.de/desktop-extention-submission  
+(Note: URL has a typo — "extention" not "extension" — that is the real URL. It redirects to a Google Form.)
 
-### What to prepare
+Anthropic reviews submissions manually and does not guarantee a response timeline. Submitting does not guarantee inclusion.
 
-- **Server name, tagline, description** — from `manifest.json`
-- **Privacy policy URL** — `https://github.com/p-l-ta/mail-mcp#privacy-policy`
-- **Tool annotations confirmed** — all 14 tools have `title`, `readOnlyHint`, `destructiveHint`
-- **Documentation link** — the GitHub README
-- **Support link** — `https://github.com/p-l-ta/mail-mcp/issues`
-- **The `.mcpb` file** — attached from the latest GitHub release
-- **Category** — Productivity / Email
-- **Tested surfaces** — Claude Desktop (macOS)
+### Hard requirements (from the form)
 
-### Requirements checklist (from review-criteria docs)
+- Publicly available on GitHub ✓
+- MIT licensed ✓ (ISC was rejected; MIT is the required license)
+- Built with Node.js ✓
+- `manifest.json` must have the `author` field pointing at your GitHub profile ✓
+  ```json
+  "author": { "name": "Paul Templin Ashford", "url": "https://github.com/p-l-ta" }
+  ```
 
-- [ ] Every tool has a `title` annotation
-- [ ] Every tool has the appropriate `readOnlyHint` or `destructiveHint`
-- [ ] Privacy policy section exists and is at a stable HTTPS URL
-- [ ] `manifest_version` is current (currently `"0.3"`)
-- [ ] `platforms: ["darwin"]` set (macOS only)
+### Form fields
+
+| Field | Value |
+|---|---|
+| Is this an update to an existing extension? | No (first submission) |
+| Primary Contact Name | Paul Templin Ashford |
+| Primary Contact Email | *(your preferred contact email)* |
+| MCP Server Description *(50 words max)* | See draft below |
+| Desktop Extension GitHub Link | `https://github.com/p-l-ta/mail-mcp` |
+| Primary Party Confirmation | No — you do not work for Apple |
+| Attach `.mcpb` file | Download from latest GitHub release |
+| Agree to MCP Directory Terms & Conditions | ✓ |
+
+**50-word description draft:**
+
+> Gives Claude full access to Mail.app on macOS — search, read, send, reply, flag, move, and trash messages across all configured accounts (iCloud, Exchange, IMAP). Search queries Mail's built-in Envelope Index for fast, structured results. Actions are driven by AppleScript so it works regardless of how mail is stored.
+
+### Pre-submission checklist
+
+- [ ] Pipeline completed successfully and `mail-mcp.mcpb` is attached to the latest release
+- [ ] All 14 tools have `title`, `readOnlyHint`, and `destructiveHint` annotations in TypeScript source
+- [ ] `manifest.json` has `manifest_version: "0.3"`, `author.url` pointing to GitHub profile, and `privacy_policies`
+- [ ] `LICENSE` file contains MIT license text
+- [ ] Privacy Policy section exists in README at `https://github.com/p-l-ta/mail-mcp#privacy-policy`
 - [ ] All tools tested via MCP Inspector before submitting
-- [ ] No prompt injection patterns in tool descriptions
-- [ ] Tool descriptions contain no misleading claims
+- [ ] Agreed to [MCP Directory Terms & Conditions](https://support.anthropic.com/en/articles/11697081-anthropic-mcp-directory-terms-and-conditions)
 
 ---
 
 ## How to cut a release
 
-1. **Bump versions** in three files:
+1. **Bump versions** in two files:
    - `package.json` → `"version": "x.y.z"`
-   - `server.json` → `"version": "x.y.z"` and `"packages[0].version": "x.y.z"`
    - `manifest.json` → `"version": "x.y.z"` (for the .mcpb bundle)
+   - `server.json` is updated automatically by the release workflow — no manual edit needed
 
 2. **Commit and push:**
    ```bash
-   git add package.json server.json manifest.json
+   git add package.json manifest.json
    git commit -m "chore: bump to vx.y.z"
    git push origin main
    ```
