@@ -203,7 +203,7 @@ Governed by the [MCPB spec](https://github.com/modelcontextprotocol/mcpb/blob/ma
   "name": "mail-mcp",
   "display_name": "Mail.app",
   "privacy_policies": [
-    { "url": "https://github.com/p-l-ta/mail-mcp#privacy-policy" }
+    "https://github.com/p-l-ta/mail-mcp#privacy-policy"
   ],
   "tools": [
     { "name": "search_emails", "description": "..." }

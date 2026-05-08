@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "mail-mcp",
   "display_name": "Mail.app",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Search, read, and send email via macOS Mail.app",
   "long_description": "Bridges Claude to Mail.app on macOS. Search uses Mail's own Envelope Index database for fast structured queries across all configured accounts (iCloud, Exchange, IMAP). Reads, replies, sends, and flag changes go through AppleScript automation against Mail.app, so the same connector works for accounts where messages aren't stored as local .emlx files. Requires Full Disk Access (to read the Envelope Index) and Automation access to Mail.app.",
   "author": {
@@ -10,9 +10,7 @@
     "url": "https://github.com/p-l-ta"
   },
   "privacy_policies": [
-    {
-      "url": "https://github.com/p-l-ta/mail-mcp#privacy-policy"
-    }
+    "https://github.com/p-l-ta/mail-mcp#privacy-policy"
   ],
   "tools": [
     {

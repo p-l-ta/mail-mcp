@@ -1,7 +1,7 @@
 {
   "name": "@p-l-ta/mail-mcp",
   "mcpName": "io.github.p-l-ta/mail-mcp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "MCP server exposing Mail.app to Claude and other MCP hosts",
   "type": "module",
   "bin": {
