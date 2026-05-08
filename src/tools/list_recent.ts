@@ -82,6 +82,7 @@ export function register(server: McpServer): void {
     "list_recent",
     "List recent messages in a mailbox of a specific account.",
     schema,
+    { title: "List Recent Emails", readOnlyHint: true, destructiveHint: false },
     async ({ account, mailbox, limit, unread_only }) => {
       const raw = await runAppleScript({
         script: SCRIPT,

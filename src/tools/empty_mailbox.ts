@@ -35,6 +35,7 @@ export function register(server: McpServer): void {
     "empty_mailbox",
     "Delete every message in a mailbox at once — moves to Deleted Messages, or permanently removes if the mailbox is already Deleted Messages/Trash. Use for Junk, Trash, or bulk-cleanup folders.",
     schema,
+    { title: "Empty Mailbox", readOnlyHint: false, destructiveHint: true },
     async ({ mailbox_name, account }) => {
       const result = await runAppleScript({
         script: SCRIPT,

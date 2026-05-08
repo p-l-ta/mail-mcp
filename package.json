@@ -1,7 +1,7 @@
 {
   "name": "@p-l-ta/mail-mcp",
   "mcpName": "io.github.p-l-ta/mail-mcp",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "MCP server exposing Mail.app to Claude and other MCP hosts",
   "type": "module",
   "bin": {
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "dxt": "node scripts/build-dxt.mjs",
+    "mcpb": "node scripts/build-mcpb.mjs",
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "test": "vitest run",
@@ -30,7 +30,7 @@
     "claude"
   ],
   "author": "Paul Templin Ashford",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/p-l-ta/mail-mcp"

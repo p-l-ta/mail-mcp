@@ -27,6 +27,7 @@ export function register(server: McpServer): void {
     "create_mailbox",
     "Create a new mailbox (folder) in a Mail.app account.",
     schema,
+    { title: "Create Mailbox", readOnlyHint: false, destructiveHint: false },
     async ({ name, account }) => {
       const result = await runAppleScript({
         script: SCRIPT,

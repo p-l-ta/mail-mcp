@@ -68,6 +68,7 @@ export function register(server: McpServer): void {
     "get_unsubscribe_link",
     "Extract unsubscribe URLs from a message — checks the List-Unsubscribe header first (reliable), then scans the plain-text body as a fallback.",
     schema,
+    { title: "Get Unsubscribe Link", readOnlyHint: true, destructiveHint: false },
     async ({ message_id }) => {
       const bareId = message_id.replace(/^<|>$/g, "");
       const raw = await runAppleScript({

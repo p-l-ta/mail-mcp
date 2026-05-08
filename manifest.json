@@ -1,13 +1,19 @@
 {
-  "dxt_version": "0.1",
+  "manifest_version": "0.3",
   "name": "mail-mcp",
   "display_name": "Mail.app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Search, read, and send email via macOS Mail.app",
   "long_description": "Bridges Claude to Mail.app on macOS. Search uses Mail's own Envelope Index database for fast structured queries across all configured accounts (iCloud, Exchange, IMAP). Reads, replies, sends, and flag changes go through AppleScript automation against Mail.app, so the same connector works for accounts where messages aren't stored as local .emlx files. Requires Full Disk Access (to read the Envelope Index) and Automation access to Mail.app.",
   "author": {
-    "name": "Paul Templin Ashford"
+    "name": "Paul Templin Ashford",
+    "url": "https://github.com/p-l-ta"
   },
+  "privacy_policies": [
+    {
+      "url": "https://github.com/p-l-ta/mail-mcp#privacy-policy"
+    }
+  ],
   "tools": [
     {
       "name": "search_emails",
@@ -26,6 +32,14 @@
       "description": "List recent messages in a specific mailbox of a specific account."
     },
     {
+      "name": "list_senders",
+      "description": "Grouped summary of senders in a mailbox with message counts and unread totals."
+    },
+    {
+      "name": "get_unsubscribe_link",
+      "description": "Extract unsubscribe URLs from a message's List-Unsubscribe header and body."
+    },
+    {
       "name": "send_email",
       "description": "Send a new email via Mail.app from one of the configured accounts."
     },
@@ -42,24 +56,16 @@
       "description": "Move a message to a different mailbox by RFC message-id."
     },
     {
-      "name": "trash_email",
-      "description": "Move a message to Deleted Messages (trash) by RFC message-id."
+      "name": "bulk_mark_read",
+      "description": "Mark all messages in a mailbox and/or from a sender as read in one call."
     },
     {
       "name": "create_mailbox",
       "description": "Create a new mailbox/folder in a Mail.app account."
     },
     {
-      "name": "bulk_mark_read",
-      "description": "Mark all messages in a mailbox and/or from a sender as read in one call."
-    },
-    {
-      "name": "get_unsubscribe_link",
-      "description": "Extract unsubscribe URLs from a message's List-Unsubscribe header and body."
-    },
-    {
-      "name": "list_senders",
-      "description": "Grouped summary of senders in a mailbox with message counts and unread totals."
+      "name": "trash_email",
+      "description": "Move a message to Deleted Messages (trash) by RFC message-id."
     },
     {
       "name": "empty_mailbox",
@@ -75,7 +81,7 @@
     }
   },
   "keywords": ["mail", "email", "macos", "applescript", "imap"],
-  "license": "ISC",
+  "license": "MIT",
   "compatibility": {
     "claude_desktop": ">=0.10.0",
     "platforms": ["darwin"],

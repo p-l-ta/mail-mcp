@@ -39,6 +39,7 @@ export function register(server: McpServer): void {
     "bulk_mark_read",
     "Mark multiple messages as read in one call — by mailbox, sender substring, or both. Far faster than calling set_message_flags per message.",
     schema,
+    { title: "Bulk Mark Read", readOnlyHint: false, destructiveHint: false },
     async ({ mailbox, from, account }) => {
       if (!mailbox && !from) {
         return {

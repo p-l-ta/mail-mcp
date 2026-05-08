@@ -19,6 +19,7 @@ export function register(server: McpServer): void {
     "search_emails",
     "Search Mail.app messages via the Envelope Index database. Returns rich metadata including RFC message-id (usable with read_email, reply_to_email, set_message_flags).",
     schema,
+    { title: "Search Emails", readOnlyHint: true, destructiveHint: false },
     async ({ query, from, subject, since, account, include_deleted, limit }) => {
       if (!query && !from && !subject && !since && !account) {
         return {

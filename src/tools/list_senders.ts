@@ -46,6 +46,7 @@ export function register(server: McpServer): void {
     "list_senders",
     "Return a grouped count of senders in a mailbox — who sends how many messages, how many are unread, and when the last arrived. Ideal for identifying bulk senders and noise.",
     schema,
+    { title: "List Senders", readOnlyHint: true, destructiveHint: false },
     async ({ mailbox, account, limit }) => {
       const dbPath = await locateEnvelopeIndex();
       const sql = buildSql(mailbox, account, limit);

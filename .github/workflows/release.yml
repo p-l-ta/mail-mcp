@@ -19,9 +19,9 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npm run build
-      - run: npm run dxt
-      - name: Upload DXT to release
-        run: gh release upload ${{ github.ref_name }} build/mail-mcp.dxt --clobber
+      - run: npm run mcpb
+      - name: Upload MCPB to release
+        run: gh release upload ${{ github.ref_name }} build/mail-mcp.mcpb --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to npm

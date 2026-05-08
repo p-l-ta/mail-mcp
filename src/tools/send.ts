@@ -35,6 +35,7 @@ export function register(server: McpServer): void {
     "send_email",
     "Send a new email via Mail.app from an existing account.",
     schema,
+    { title: "Send Email", readOnlyHint: false, destructiveHint: true },
     async ({ to, cc, subject, body, from_account }) => {
       await runAppleScript({
         script: SCRIPT,

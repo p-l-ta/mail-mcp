@@ -12,8 +12,8 @@ MCP server that gives Claude (and other MCP hosts) full access to **Mail.app** o
 
 ### Claude Desktop — one-click install (recommended)
 
-1. Download `mail-mcp.dxt` from the [latest release](https://github.com/p-l-ta/mail-mcp/releases/latest)
-2. Double-click the `.dxt` file — Claude Desktop installs it automatically
+1. Download `mail-mcp.mcpb` from the [latest release](https://github.com/p-l-ta/mail-mcp/releases/latest)
+2. Double-click the `.mcpb` file — Claude Desktop installs it automatically
 3. Grant the required macOS permissions (see below)
 
 ### Manual / Amazon Quick / other hosts
@@ -84,7 +84,7 @@ npm install
 npm run dev          # tsx watch — live reload
 npm test             # vitest unit tests
 npm run build        # compile TypeScript → dist/
-npm run dxt          # build Claude Desktop extension → build/mail-mcp.dxt
+npm run mcpb         # build Claude Desktop extension → build/mail-mcp.mcpb
 ```
 
 Interactive MCP testing:
@@ -94,6 +94,21 @@ npm run build
 npx @modelcontextprotocol/inspector node dist/server.js
 ```
 
+## Privacy Policy
+
+mail-mcp is a **local** MCP server that runs entirely on your Mac. It has no backend, no telemetry, and makes no network requests of its own.
+
+**What it accesses:**
+- Mail.app's Envelope Index database (`~/Library/Mail/`) — read-only, used for search queries
+- Mail.app via AppleScript — to read message bodies, send mail, flag, move, and trash messages
+
+**What it does NOT do:**
+- Collect, store, or transmit any data outside your Mac
+- Connect to any external server or API
+- Log message content anywhere
+
+All email data stays on your device and is only passed to the MCP host (Claude Desktop or another client) as part of normal tool responses. You control exactly which tools Claude can invoke.
+
 ## License
 
-ISC
+MIT

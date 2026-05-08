@@ -45,6 +45,7 @@ export function register(server: McpServer): void {
     "list_accounts_and_mailboxes",
     "List all configured Mail.app accounts and their mailboxes with unread counts.",
     {},
+    { title: "List Accounts and Mailboxes", readOnlyHint: true, destructiveHint: false },
     async () => {
       const raw = await runAppleScript({ script: SCRIPT });
       const accounts = parse(raw);

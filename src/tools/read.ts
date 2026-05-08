@@ -33,6 +33,7 @@ export function register(server: McpServer): void {
     "read_email",
     "Read full body of a message by its RFC message-id. Uses Mail.app via AppleScript so it works for IMAP/iCloud/Exchange messages without filesystem access.",
     schema,
+    { title: "Read Email", readOnlyHint: true, destructiveHint: false },
     async ({ message_id }) => {
       const raw = await findMessageAndAct({
         messageId: message_id,

@@ -16,6 +16,7 @@ export function register(server: McpServer): void {
     "trash_email",
     "Move a message to Deleted Messages (trash) by RFC message-id. Does not permanently delete.",
     schema,
+    { title: "Trash Email", readOnlyHint: false, destructiveHint: true },
     async ({ message_id }) => {
       const result = await findMessageAndAct({
         messageId: message_id,

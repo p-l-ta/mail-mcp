@@ -23,6 +23,7 @@ export function register(server: McpServer): void {
     "set_message_flags",
     "Set read and/or flagged status on a message identified by RFC message-id.",
     schema,
+    { title: "Set Message Flags", readOnlyHint: false, destructiveHint: false },
     async ({ message_id, read, flagged }) => {
       if (read === undefined && flagged === undefined) {
         return { content: [{ type: "text", text: "No-op (no flags supplied)" }] };

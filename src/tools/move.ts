@@ -31,6 +31,7 @@ export function register(server: McpServer): void {
     "move_email",
     "Move a message to a different mailbox by RFC message-id. Use list_accounts_and_mailboxes to get exact mailbox names.",
     schema,
+    { title: "Move Email", readOnlyHint: false, destructiveHint: false },
     async ({ message_id, destination_mailbox, destination_account }) => {
       const result = await findMessageAndAct({
         messageId: message_id,

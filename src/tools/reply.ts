@@ -25,6 +25,7 @@ export function register(server: McpServer): void {
     "reply_to_email",
     "Reply to an existing message identified by RFC message-id.",
     schema,
+    { title: "Reply to Email", readOnlyHint: false, destructiveHint: true },
     async ({ message_id, body, reply_all }) => {
       const result = await findMessageAndAct({
         messageId: message_id,
