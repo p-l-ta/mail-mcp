@@ -26,3 +26,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to npm
         run: npm publish --access public --provenance
+      - name: Publish to MCP registry
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_darwin_arm64.tar.gz" | tar -xz -C /usr/local/bin
+          jq --arg v "$VERSION" '.version = $v | .packages[0].version = $v' server.json > server.tmp.json && mv server.tmp.json server.json
+          mcp-publisher login github-oidc
+          mcp-publisher publish
