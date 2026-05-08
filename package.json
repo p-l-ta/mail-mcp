@@ -1,6 +1,6 @@
 {
   "name": "@p-l-ta/mail-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server exposing Mail.app to Claude and other MCP hosts",
   "type": "module",
   "bin": {
@@ -20,7 +20,14 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["mcp", "mail", "email", "macos", "applescript", "claude"],
+  "keywords": [
+    "mcp",
+    "mail",
+    "email",
+    "macos",
+    "applescript",
+    "claude"
+  ],
   "author": "Paul Templin Ashford",
   "license": "ISC",
   "repository": {
