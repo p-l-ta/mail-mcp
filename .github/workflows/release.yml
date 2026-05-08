@@ -21,7 +21,7 @@ jobs:
       - run: npm run build
       - run: npm run dxt
       - name: Upload DXT to release
-        run: gh release upload ${{ github.ref_name }} build/mail-mcp.dxt
+        run: gh release upload ${{ github.ref_name }} build/mail-mcp.dxt --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to npm
