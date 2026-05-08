@@ -415,4 +415,6 @@ Anthropic reviews submissions manually and does not guarantee a response timelin
 
 **Tool annotations in the wrong place** — `title`, `readOnlyHint`, `destructiveHint` belong in the TypeScript `server.tool()` call, not in `manifest.json`'s tools array. The manifest only takes `name` and `description` per tool.
 
+**`privacy_policies` is an array of strings, not objects** — the MCPB validator expects `["https://..."]`, not `[{ "url": "https://..." }]`. The latter gives "Expected string, received object" when Claude Desktop tries to load the extension.
+
 **macOS permissions belong to the host app** — the MCP server process inherits permissions from whatever app launches it (Claude Desktop, etc.). Telling users to grant Full Disk Access to "the node binary" is wrong. They grant it to Claude Desktop (or whichever host they use), and the MCP server inherits it automatically.
