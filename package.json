@@ -1,23 +1,39 @@
 {
   "name": "mail-mcp",
   "version": "1.0.0",
-  "description": "Local MCP server exposing Mail.app to Claude Cowork",
+  "description": "MCP server exposing Mail.app to Claude and other MCP hosts",
   "type": "module",
   "bin": {
     "mail-mcp": "dist/server.js"
   },
   "main": "dist/server.js",
+  "files": [
+    "dist",
+    "manifest.json"
+  ],
   "scripts": {
     "build": "tsc",
+    "dxt": "node scripts/build-dxt.mjs",
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": ["mcp", "mail", "applescript", "claude"],
-  "author": "",
+  "keywords": ["mcp", "mail", "email", "macos", "applescript", "claude"],
+  "author": "Paul Templin Ashford",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/p-l-ta/mail-mcp"
+  },
+  "homepage": "https://github.com/p-l-ta/mail-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/p-l-ta/mail-mcp/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^4.4.2"
