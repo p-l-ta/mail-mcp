@@ -23,9 +23,9 @@ jobs:
       - run: npm run build
       - run: npm run dxt
       - name: Upload DXT to release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: build/mail-mcp.dxt
+        run: gh release upload ${{ github.ref_name }} build/mail-mcp.dxt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to npm
         run: npm publish --access public
         env:
