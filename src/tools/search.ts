@@ -9,7 +9,7 @@ const schema = {
   from: z.string().optional().describe("Substring match on sender address or display name"),
   subject: z.string().optional().describe("Substring match on subject"),
   since: z.string().optional().describe("ISO date — only messages on or after this date"),
-  account: z.string().optional().describe("Restrict to a specific account (matches mailbox URL host)"),
+  account: z.string().optional().describe("Substring match against the full mailbox URL (host and path). Use the account hostname to target an account (e.g. 'icloud'), or a mailbox path segment to target a specific folder (e.g. 'INBOX', 'Amtrak')."),
   include_deleted: z.boolean().default(false),
   limit: z.number().int().min(1).max(100).default(20),
 };

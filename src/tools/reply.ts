@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { runAppleScript } from "../lib/applescript.js";
+import { findMessageAndAct, MESSAGE_NOT_FOUND } from "../lib/find-message.js";
 
 const schema = {
   message_id: z.string().describe("RFC message-id from search/list results"),
@@ -8,30 +8,16 @@ const schema = {
   reply_all: z.boolean().default(false),
 };
 
-const SCRIPT = `
+const ACTION = `
   set replyAll to (replyAllStr is "true")
-  tell application "Mail"
-    set foundMsg to missing value
-    repeat with acct in accounts
-      repeat with mb in mailboxes of acct
-        set candidates to (messages of mb whose message id is theMsgId)
-        if (count of candidates) > 0 then
-          set foundMsg to item 1 of candidates
-          exit repeat
-        end if
-      end repeat
-      if foundMsg is not missing value then exit repeat
-    end repeat
-    if foundMsg is missing value then return "Message not found"
-    if replyAll then
-      set replyMsg to reply foundMsg opening window no reply to all true
-    else
-      set replyMsg to reply foundMsg opening window no reply to all false
-    end if
-    set content of replyMsg to theBody
-    send replyMsg
-    return "replied"
-  end tell
+  if replyAll then
+    set replyMsg to reply foundMsg opening window no reply to all true
+  else
+    set replyMsg to reply foundMsg opening window no reply to all false
+  end if
+  set content of replyMsg to theBody
+  send replyMsg
+  return "replied"
 `;
 
 export function register(server: McpServer): void {
@@ -40,15 +26,20 @@ export function register(server: McpServer): void {
     "Reply to an existing message identified by RFC message-id.",
     schema,
     async ({ message_id, body, reply_all }) => {
-      const bareId = message_id.replace(/^<|>$/g, "");
-      const result = await runAppleScript({
-        script: SCRIPT,
-        args: {
-          theMsgId: bareId,
+      const result = await findMessageAndAct({
+        messageId: message_id,
+        action: ACTION,
+        extraArgs: {
           theBody: body,
           replyAllStr: reply_all ? "true" : "false",
         },
       });
+      if (result === MESSAGE_NOT_FOUND) {
+        return {
+          content: [{ type: "text", text: `No message found with id ${message_id}` }],
+          isError: true,
+        };
+      }
       return { content: [{ type: "text", text: result }] };
     },
   );

@@ -9,6 +9,13 @@ import { register as registerListRecent } from "./tools/list_recent.js";
 import { register as registerSend } from "./tools/send.js";
 import { register as registerReply } from "./tools/reply.js";
 import { register as registerFlags } from "./tools/flags.js";
+import { register as registerMove } from "./tools/move.js";
+import { register as registerTrash } from "./tools/trash.js";
+import { register as registerCreateMailbox } from "./tools/create_mailbox.js";
+import { register as registerBulkMarkRead } from "./tools/bulk_mark_read.js";
+import { register as registerGetUnsubscribeLink } from "./tools/get_unsubscribe_link.js";
+import { register as registerListSenders } from "./tools/list_senders.js";
+import { register as registerEmptyMailbox } from "./tools/empty_mailbox.js";
 
 const server = new McpServer({
   name: "mail-app-mcp",
@@ -22,6 +29,13 @@ registerListRecent(server);
 registerSend(server);
 registerReply(server);
 registerFlags(server);
+registerMove(server);
+registerTrash(server);
+registerCreateMailbox(server);
+registerBulkMarkRead(server);
+registerGetUnsubscribeLink(server);
+registerListSenders(server);
+registerEmptyMailbox(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

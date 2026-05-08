@@ -1,0 +1,86 @@
+{
+  "dxt_version": "0.1",
+  "name": "mail-mcp",
+  "display_name": "Mail.app",
+  "version": "1.0.0",
+  "description": "Search, read, and send email via macOS Mail.app",
+  "long_description": "Bridges Claude to Mail.app on macOS. Search uses Mail's own Envelope Index database for fast structured queries across all configured accounts (iCloud, Exchange, IMAP). Reads, replies, sends, and flag changes go through AppleScript automation against Mail.app, so the same connector works for accounts where messages aren't stored as local .emlx files. Requires Full Disk Access (to read the Envelope Index) and Automation access to Mail.app.",
+  "author": {
+    "name": "Paul Templin Ashford"
+  },
+  "tools": [
+    {
+      "name": "search_emails",
+      "description": "Search Mail.app messages via the Envelope Index database with rich filters."
+    },
+    {
+      "name": "read_email",
+      "description": "Read full body of a message by its RFC message-id via Mail.app."
+    },
+    {
+      "name": "list_accounts_and_mailboxes",
+      "description": "List all configured Mail.app accounts and their mailboxes with unread counts."
+    },
+    {
+      "name": "list_recent",
+      "description": "List recent messages in a specific mailbox of a specific account."
+    },
+    {
+      "name": "send_email",
+      "description": "Send a new email via Mail.app from one of the configured accounts."
+    },
+    {
+      "name": "reply_to_email",
+      "description": "Reply to an existing message identified by RFC message-id."
+    },
+    {
+      "name": "set_message_flags",
+      "description": "Set read and/or flagged status on a message by RFC message-id."
+    },
+    {
+      "name": "move_email",
+      "description": "Move a message to a different mailbox by RFC message-id."
+    },
+    {
+      "name": "trash_email",
+      "description": "Move a message to Deleted Messages (trash) by RFC message-id."
+    },
+    {
+      "name": "create_mailbox",
+      "description": "Create a new mailbox/folder in a Mail.app account."
+    },
+    {
+      "name": "bulk_mark_read",
+      "description": "Mark all messages in a mailbox and/or from a sender as read in one call."
+    },
+    {
+      "name": "get_unsubscribe_link",
+      "description": "Extract unsubscribe URLs from a message's List-Unsubscribe header and body."
+    },
+    {
+      "name": "list_senders",
+      "description": "Grouped summary of senders in a mailbox with message counts and unread totals."
+    },
+    {
+      "name": "empty_mailbox",
+      "description": "Delete every message in a mailbox at once (Junk, Deleted Messages, etc.)."
+    }
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "dist/server.js",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/server.js"]
+    }
+  },
+  "keywords": ["mail", "email", "macos", "applescript", "imap"],
+  "license": "ISC",
+  "compatibility": {
+    "claude_desktop": ">=0.10.0",
+    "platforms": ["darwin"],
+    "runtimes": {
+      "node": ">=20.0.0"
+    }
+  }
+}
