@@ -84,6 +84,14 @@
     {
       "name": "delete_rule",
       "description": "Delete a Mail.app rule by its RuleId."
+    },
+    {
+      "name": "check_compatibility",
+      "description": "Probe each mail-mcp dependency and report pass/fail. Run after a macOS update."
+    },
+    {
+      "name": "submit_feedback",
+      "description": "Open a pre-filled GitHub issue for mail-mcp in the browser."
     }
   ],
   "server": {

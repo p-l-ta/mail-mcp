@@ -20,6 +20,9 @@ import { register as registerListRules } from "./tools/list_rules.js";
 import { register as registerCreateRule } from "./tools/create_rule.js";
 import { register as registerUpdateRule } from "./tools/update_rule.js";
 import { register as registerDeleteRule } from "./tools/delete_rule.js";
+import { register as registerCheckCompatibility } from "./tools/check_compatibility.js";
+import { register as registerSubmitFeedback } from "./tools/submit_feedback.js";
+import { checkVersionChange } from "./lib/state.js";
 
 const server = new McpServer({
   name: "mail-app-mcp",
@@ -44,6 +47,15 @@ registerListRules(server);
 registerCreateRule(server);
 registerUpdateRule(server);
 registerDeleteRule(server);
+registerCheckCompatibility(server);
+registerSubmitFeedback(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
+
+// Check for macOS version change and warn on stderr (visible in Claude Desktop logs)
+checkVersionChange()
+  .then((warning) => {
+    if (warning) process.stderr.write(`[mail-mcp] ⚠️  ${warning}\n`);
+  })
+  .catch(() => {}); // non-fatal
