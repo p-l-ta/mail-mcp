@@ -4,6 +4,7 @@ import {
   readRules,
   writeRules,
   notifyMailRulesChanged,
+  upsertRuleInMail,
   newRuleId,
   nowTimestamp,
   type Rule,
@@ -102,6 +103,8 @@ export function register(server: McpServer): void {
       rules.push(newRule);
       const { backupPath } = await writeRules(rules);
       const mailRunning = await notifyMailRulesChanged();
+      // Sync new rule into Mail's in-memory state so it isn't lost on quit.
+      await upsertRuleInMail(newRule);
 
       return {
         content: [

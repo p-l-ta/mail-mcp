@@ -4,6 +4,7 @@ import {
   readRules,
   writeRules,
   notifyMailRulesChanged,
+  upsertRuleInMail,
   newRuleId,
   nowTimestamp,
   type RuleCriterion,
@@ -68,6 +69,7 @@ export function register(server: McpServer): void {
       }
 
       const rule = { ...rules[idx]! };
+      const oldName = rule.RuleName; // capture before any rename
 
       if (name !== undefined) rule.RuleName = name;
       if (match_all !== undefined) rule.AllCriteriaMustBeSatisfied = match_all;
@@ -120,6 +122,8 @@ export function register(server: McpServer): void {
 
       const { backupPath } = await writeRules(rules);
       const mailRunning = await notifyMailRulesChanged();
+      // Sync updated rule into Mail's in-memory state so changes aren't lost on quit.
+      await upsertRuleInMail(rule, oldName);
 
       return {
         content: [

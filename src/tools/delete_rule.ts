@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { readRules, writeRules, notifyMailRulesChanged } from "../lib/rules.js";
+import { readRules, writeRules, notifyMailRulesChanged, deleteRuleFromMail } from "../lib/rules.js";
 
 const schema = {
   rule_id: z.string().describe("The RuleId of the rule to delete (from list_rules)."),
@@ -30,6 +30,9 @@ export function register(server: McpServer): void {
       const remaining = rules.filter((_, i) => i !== idx);
       const { backupPath } = await writeRules(remaining);
       const mailRunning = await notifyMailRulesChanged();
+      // Sync deletion into Mail's in-memory state so Mail doesn't restore
+      // the deleted rule when it overwrites the plist on quit.
+      await deleteRuleFromMail(deleted.RuleName);
 
       return {
         content: [
