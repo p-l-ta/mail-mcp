@@ -68,6 +68,22 @@
     {
       "name": "empty_mailbox",
       "description": "Delete every message in a mailbox at once (Junk, Deleted Messages, etc.)."
+    },
+    {
+      "name": "list_rules",
+      "description": "List all Mail.app rules with their conditions and actions."
+    },
+    {
+      "name": "create_rule",
+      "description": "Create a new Mail.app rule with conditions and actions."
+    },
+    {
+      "name": "update_rule",
+      "description": "Update an existing Mail.app rule by its RuleId."
+    },
+    {
+      "name": "delete_rule",
+      "description": "Delete a Mail.app rule by its RuleId."
     }
   ],
   "server": {

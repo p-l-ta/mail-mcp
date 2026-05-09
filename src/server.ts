@@ -16,6 +16,10 @@ import { register as registerBulkMarkRead } from "./tools/bulk_mark_read.js";
 import { register as registerGetUnsubscribeLink } from "./tools/get_unsubscribe_link.js";
 import { register as registerListSenders } from "./tools/list_senders.js";
 import { register as registerEmptyMailbox } from "./tools/empty_mailbox.js";
+import { register as registerListRules } from "./tools/list_rules.js";
+import { register as registerCreateRule } from "./tools/create_rule.js";
+import { register as registerUpdateRule } from "./tools/update_rule.js";
+import { register as registerDeleteRule } from "./tools/delete_rule.js";
 
 const server = new McpServer({
   name: "mail-app-mcp",
@@ -36,6 +40,10 @@ registerBulkMarkRead(server);
 registerGetUnsubscribeLink(server);
 registerListSenders(server);
 registerEmptyMailbox(server);
+registerListRules(server);
+registerCreateRule(server);
+registerUpdateRule(server);
+registerDeleteRule(server);
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
