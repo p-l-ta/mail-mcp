@@ -55,6 +55,8 @@ function resolveQualifier(header: string, qualifier: string | undefined): string
   return "Contains";
 }
 
+export const __test = { resolveColor, resolveQualifier };
+
 export function register(server: McpServer): void {
   server.tool(
     "list_rules",
