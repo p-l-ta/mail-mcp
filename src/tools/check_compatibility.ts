@@ -141,6 +141,14 @@ end tell`,
   }
 }
 
+export const __test = {
+  checkMacosVersion,
+  checkMailDataDir,
+  checkSyncedRules,
+  checkEnvelopeIndex,
+  checkAppleScript,
+};
+
 // ---------------------------------------------------------------------------
 // Tool registration
 // ---------------------------------------------------------------------------

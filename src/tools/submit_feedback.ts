@@ -17,6 +17,31 @@ const schema = {
     ),
 };
 
+/** Build the GitHub new-issue URL for a given title, description, and versions. */
+export function buildIssueUrl(opts: {
+  title: string | undefined;
+  description: string;
+  macosVersion: string;
+  pkgVersion: string;
+}): string {
+  const { title, description, macosVersion, pkgVersion } = opts;
+  const issueTitle =
+    title ?? `[Feedback] ${description.slice(0, 60)}${description.length > 60 ? "…" : ""}`;
+  const body = [
+    description,
+    "",
+    "---",
+    `**mail-mcp version:** ${pkgVersion}`,
+    `**macOS version:** ${macosVersion}`,
+  ].join("\n");
+  const url = new URL(`https://github.com/${REPO}/issues/new`);
+  url.searchParams.set("title", issueTitle);
+  url.searchParams.set("body", body);
+  return url.toString();
+}
+
+export const __test = { buildIssueUrl };
+
 export function register(server: McpServer): void {
   server.tool(
     "submit_feedback",
@@ -26,22 +51,10 @@ export function register(server: McpServer): void {
     async ({ title, description }) => {
       const [macosVersion, pkgVersion] = await Promise.all([getMacosVersion(), getPackageVersion()]);
 
-      const issueTitle = title ?? `[Feedback] ${description.slice(0, 60)}${description.length > 60 ? "…" : ""}`;
-
-      const body = [
-        description,
-        "",
-        "---",
-        `**mail-mcp version:** ${pkgVersion}`,
-        `**macOS version:** ${macosVersion}`,
-      ].join("\n");
-
-      const url = new URL(`https://github.com/${REPO}/issues/new`);
-      url.searchParams.set("title", issueTitle);
-      url.searchParams.set("body", body);
+      const urlStr = buildIssueUrl({ title, description, macosVersion, pkgVersion });
 
       try {
-        await execFileP("open", [url.toString()]);
+        await execFileP("open", [urlStr]);
         return {
           content: [
             {
@@ -49,7 +62,7 @@ export function register(server: McpServer): void {
               text: JSON.stringify(
                 {
                   status: "opened",
-                  url: url.toString(),
+                  url: urlStr,
                   note: "A pre-filled GitHub issue has been opened in your browser. Review and submit it there.",
                 },
                 null,
@@ -69,7 +82,7 @@ export function register(server: McpServer): void {
                 {
                   status: "error",
                   error: msg,
-                  url: url.toString(),
+                  url: urlStr,
                   note: "Could not open browser automatically. Copy the URL above and open it manually.",
                 },
                 null,
